@@ -1,8 +1,9 @@
 try {
   var SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
   var recognition = new SpeechRecognition();
-  recognition.lang = "ja-JP"
-//  recognition.continuous = true;
+  recognition.lang = "ja-JP";
+  recognition.continuous = true;
+  recognition.maxAlternatives = 10;
 //  recognition.interimResults = true;
   var speechRecognitionList = new webkitSpeechGrammarList();
   speechRecognitionList.addFromString("Hey 朝日", 1);

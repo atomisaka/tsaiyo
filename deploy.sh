@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gcloud app deploy
+gcloud app deploy -v d001

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"/>
+ <script src="https://d3js.org/d3.v5.min.js"></script>
+ <style type="text/css">
+  .axis path, .axis line {
+   fill: none;
+   stroke: black;
+   shape-rendering: crispEdges;
+  }
+ </style>
+</head>
+<body>
+<h1>Media Capture and Stream API</h1>
+<div>
+ <button onclick="startRecording()" id="start">開始</button>
+ <button onclick="endRecording()" id="end" disabled>終了</button>
+</div>
+<div>
+ <div id="graph" style="width:300px;height:200px"></div>
+ <div id="log"></div>
+</div>
+<script type="text/javascript">
+  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+  var localStream;
+  var startbutton = document.getElementById("start");
+  var endbutton = document.getElementById("end");
+  var startRecording = function() {
+    navigator.getUserMedia({audio: {sampleRate:8000}}, function(stream) {
+      localStream = stream;
+      var audioContext = new window.AudioContext();
+alert(audioContext.sampleRate);
+      var mediastreamsource = audioContext.createMediaStreamSource(stream);
+      var scriptProcessor = audioContext.createScriptProcessor(1024);
+      scriptProcessor.onaudioprocess = onAudioProcess;
+
+      mediastreamsource.connect(scriptProcessor);
+      scriptProcessor.connect(audioContext.destination);
+
+      var audioTrack = stream.getAudioTracks()[0];
+      audioTrack.onended = function (e) {
+alert("end");
+        startbutton.disabled = false;
+      };
+      graphInit(audioTrack.getSettings().sampleRate * 2);
+      startbutton.disabled = true;
+      endbutton.disabled = false;
+      stream.onended = function () {
+alert("end");
+        startbutton.disabled = false;
+      };
+      stream.onremovetrack = function () {
+alert("remove");
+        startbutton.disabled = false;
+      };
+    }, function(e) { console.log(e); alert("開始できません。"); } );
+  };
+  var endRecording = function() {
+      audioTrack.stop();
+      endbutton.disabled = true;
+      localStream.getAudioTracks().forEach()
+  };
+  var onAudioProcess = function(e) {
+      var input = e.inputBuffer.getChannelData(0);
+      graphdata = graphdata.slice(input.length)
+      Array.prototype.push.apply(graphdata,input);
+  };
+  // 以下グラフ描画用コード
+  var graphinited = false;
+  var graphdata = [];
+  var graphInit = function (graphSize) {
+    if (graphinited) return;
+    graphinited = true;
+    graphdata = new Array(graphSize);
+    var width = 300;
+    var height = 200;
+    var margin = 10;
+    var xmin = 0;
+    var xmax = graphSize;
+    var ymin = -1;
+    var ymax = 1;
+    svg = d3.select("#graph")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+    var xScale = d3.scaleLinear().domain([xmin, xmax]).range([margin,width - margin]);
+    var yScale = d3.scaleLinear().domain([ymax, ymin]).range([margin,height - margin]);
+    var xAxis = d3.axisBottom(xScale).tickSize(0).tickFormat("");
+    svg.append("g")
+       .attr("class", "axis")
+       .attr("transform", "translate(0," + yScale(0) + ")")
+       .call(xAxis);
+    d3line = d3.line()
+               .x(function(d,i){return xScale(i);})
+               .y(function(d,i){return yScale(d);});
+    var pathg = svg.append("g")
+    pathg.append("path")
+         .data([graphdata])
+         .style("stroke-width", 1)
+         .style("stroke", "steelblue")
+         .style("fill", "none");
+    setInterval(function () {
+      pathg.selectAll("path")
+           .data([graphdata])
+           .attr("d", d3line);
+    }, 100);
+  };
+</script>
+</body>
+</html>
