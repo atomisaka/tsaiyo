@@ -161,7 +161,7 @@ function encodeFlac(arrayBuffer, recBuffers, isVerify, wav_parameters){
   	console.info('meta data: ', data);
   	meta_data = data;
   }
-  var tot_samples = binData.length;
+  var tot_samples = 0;
   var compression_level = 5;
   var flac_ok = 1;
   var is_verify = isVerify;
