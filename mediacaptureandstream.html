@@ -12,7 +12,6 @@
 </div>
 <div>
  <div id="graph" style="width:300px;height:200px"></div>
- <div id="log"></div>
 </div>
 <script type="text/javascript"><!--
   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -36,6 +35,16 @@
       endbutton.disabled = false;
     }, function(e) { alert("開始できません(" + e + ")。"); } );
   };
+  var onAudioProcess = function(e) {
+      var input = e.inputBuffer.getChannelData(0);
+      graphdata = graphdata.slice(input.length)
+      Array.prototype.push.apply(graphdata,input);
+      // 入力をそのまま出力する
+      // var output = e.outputBuffer.getChannelData(0);
+      // for (var i=0;i<input.length;i++) {
+      //   output[i] = input[i];
+      // }
+  };
   var end = function() {
       endbutton.disabled = true;
       // 後片付け
@@ -46,16 +55,6 @@
       scriptNode.disconnect(audioCtx.destination);
       // 開始ボタンを押せるように
       startbutton.disabled = false;
-  };
-  var onAudioProcess = function(e) {
-      var input = e.inputBuffer.getChannelData(0);
-      graphdata = graphdata.slice(input.length)
-      Array.prototype.push.apply(graphdata,input);
-      // 入力をそのまま出力する
-      // var output = e.outputBuffer.getChannelData(0);
-      // for (var i=0;i<input.length;i++) {
-      //   output[i] = input[i];
-      // }
   };
   // 以下グラフ描画用コード
   var graphSize = 8000;
