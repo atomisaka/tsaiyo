@@ -51,7 +51,7 @@
       	view.setInt32(index, (audioData[i] * (0x7FFF * volume)), true);
       	index += 4;
       }
-      arrayBuffer.push(buf_i32);
+      // arrayBuffer.push(buf_i32);
 
       graphdata = graphdata.slice(audioData.length)
       Array.prototype.push.apply(graphdata,audioData);
