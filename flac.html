@@ -41,6 +41,7 @@
   };
   var arrayBuffer = new Array();
   var onAudioProcess = function(e) {
+try {
       var audioData = e.inputBuffer.getChannelData(0);
       var buf_length = audioData.length;
       var buffer_i32 = new Uint32Array(buf_length);
@@ -51,10 +52,13 @@
       	view.setInt32(index, (audioData[i] * (0x7FFF * volume)), true);
       	index += 4;
       }
-      // arrayBuffer.push(buf_i32);
+      arrayBuffer.push(buf_i32);
 
       graphdata = graphdata.slice(audioData.length)
       Array.prototype.push.apply(graphdata,audioData);
+} catch (e) {
+  alert(e);
+};
   };
   var end = function() {
       endbutton.disabled = true;
