@@ -40,8 +40,15 @@ class MediaCaptureAndStreamAPI(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('mediacaptureandstream.html')
         self.response.write(template.render(now=time.time()))
 
+class Flac(webapp2.RequestHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'text/html'
+        template = JINJA_ENVIRONMENT.get_template('flac.html')
+        self.response.write(template.render(now=time.time()))
+
 app = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/SpeechRecognition', SpeechRecognition),
-    ('/Stream', MediaCaptureAndStreamAPI),
+    ('/recognition', SpeechRecognition),
+    ('/stream', MediaCaptureAndStreamAPI),
+    ('/flac', Flac),
 ], debug=True)
