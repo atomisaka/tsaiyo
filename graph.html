@@ -15,7 +15,7 @@
    var localStream,source,scriptNode;
    var startbutton = document.getElementById("start");
    var endbutton = document.getElementById("end");
-   // getUserMediaとAudioContextを用意する
+   // getUserMediaとAudioContextを準備する
    navigator.mediaDevices = navigator.mediaDevices || ((navigator.mozGetUserMedia || navigator.webkitGetUserMedia) ? {
       getUserMedia: function(c) {
         return new Promise(function(y, n) {
