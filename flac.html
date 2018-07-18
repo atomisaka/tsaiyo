@@ -84,7 +84,7 @@ try {
        offset += 4;
      }
      var encData = [];
-     var result = encodeFlac(arrayBuffer, encData, flacParams);
+     var result = encodeFlac(uint32Buffer, encData, flacParams);
      var recLength = getLength(encData);
      if(result.metaData){
        addFLACMetaData(encData, result.metaData);
