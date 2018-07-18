@@ -55,9 +55,11 @@
      });
      source.disconnect(scriptNode);
      scriptNode.disconnect(audioCtx.destination);
-     // 開始ボタンを押せるように
-     startbutton.disabled = false;
+     // Flacでダウンロード
      downloadAsFlac(floatBuffer,"test.flac")
+     // 開始ボタンを押せるように
+     floatBuffer = new Array();
+     startbutton.disabled = false;
    };
    // 以下Flacダウンロード用コード
    function downloadAsFlac(floatBuffer,fileName) {
