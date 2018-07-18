@@ -12,7 +12,6 @@
  </div>
  <div><div id="graph"></div></div>
  <script type="text/javascript"><!--
-       alert("debug");
    var localStream,source,scriptNode;
    var startbutton = document.getElementById("start");
    var endbutton = document.getElementById("end");
@@ -44,7 +43,9 @@
        endbutton.disabled = false;
      }, function(e) { alert("開始できません(" + e + ")。"); } );
    };
+       alert("debug");
    // 音声入力をグラフ用配列に入れる
+       alert("debug");
    var graphSize = 8000;
    var graphdata = new Array(graphSize);
    var onAudioProcess = function(e) {
