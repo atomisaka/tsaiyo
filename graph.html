@@ -31,7 +31,7 @@
      navigator.mediaDevices.getUserMedia({audio: true}, function(stream) {
        startbutton.disabled = true;
        localStream = stream;
-       // alert(stream.getTracks()[0].label);
+       alert(stream.getTracks()[0].label);
        // Nodeを二つ用意
        source = audioCtx.createMediaStreamSource(stream);
        scriptNode = audioCtx.createScriptProcessor(4096, 1, 1);
@@ -47,6 +47,7 @@
    var graphSize = 8000;
    var graphdata = new Array(graphSize);
    var onAudioProcess = function(e) {
+       alert("debug");
 try {
        var input = e.inputBuffer.getChannelData(0);
        graphdata = graphdata.slice(input.length)
