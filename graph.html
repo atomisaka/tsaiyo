@@ -29,6 +29,7 @@
    var start = function() {
      // 音声のStreamを取得する
      navigator.mediaDevices.getUserMedia({audio: true}, function(stream) {
+try {
        startbutton.disabled = true;
        localStream = stream;
        alert(stream.getTracks()[0].label);
@@ -41,15 +42,15 @@
        scriptNode.connect(audioCtx.destination);
        // 終了ボタンを押せるように
        endbutton.disabled = false;
+} catch (e) {
+  alert(e);
+};
      }, function(e) { alert("開始できません(" + e + ")。"); } );
    };
-       alert("debug");
    // 音声入力をグラフ用配列に入れる
-       alert("debug");
    var graphSize = 8000;
-   var graphdata = new Array(graphSize);
+   var graphdata = new Array(graphSize).fill(0);
    var onAudioProcess = function(e) {
-       alert("debug");
 try {
        var input = e.inputBuffer.getChannelData(0);
        graphdata = graphdata.slice(input.length)
