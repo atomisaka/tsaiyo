@@ -49,8 +49,8 @@
    var onAudioProcess = function(e) {
        var input = e.inputBuffer.getChannelData(0);
        graphdata = graphdata.slice(input.length)
-       // graphdata = graphdata.concat(input);
-       Array.prototype.push.apply(graphdata,input);
+       graphdata = graphdata.concat(input);
+       // Array.prototype.push.apply(graphdata,input);
        // 入力をそのまま出力する
        // var output = e.outputBuffer.getChannelData(0);
        // for (var i=0;i<input.length;i++) {
