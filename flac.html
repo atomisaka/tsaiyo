@@ -2,10 +2,7 @@
 <html>
 <head>
  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"/>
- <script src="https://d3js.org/d3.v5.min.js"></script>
- <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
  <script src="static/js/libflac4-1.3.2.js"></script>
- <script src="static/js/FileSaver.js"></script>
 </head>
 <body>
  <h1>Flac 録音</h1>
@@ -67,7 +64,6 @@
    };
    // 以下Flac変換用コード
    function downloadAsFlac(floatBuffer,fileName) {
-try {
      var flacParams = {
        sample_rate   : audioCtx.sampleRate,
        channels      : 1,
@@ -91,10 +87,11 @@ try {
      }
      var samples = mergeBuffers(encData, recLength);
      var blob = new Blob([samples],{ type: 'audio/flac' });
-     saveAs(blob, fileName);
-} catch (e) {
-  alert(e);
-};
+     window.URL = window.URL || window.webkitURL;
+     var a = document.createElement('a');
+     a.href = window.URL.createObjectURL(blob);
+     a.download = fileName;
+     a.click();
    }
    function encodeFlac(buffer, recBuffers, flacParams){
      var meta_data;
