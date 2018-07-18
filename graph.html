@@ -56,15 +56,14 @@
        //   output[i] = input[i];
        // }
    };
+   // 後片付け
    var end = function() {
        endbutton.disabled = true;
-       // 後片付け
        localStream.getTracks().forEach(function(track) {
           track.stop();
        });
        source.disconnect(scriptNode);
        scriptNode.disconnect(audioCtx.destination);
-       // 開始ボタンを押せるように
        startbutton.disabled = false;
    };
    // 以下グラフ描画用コード
