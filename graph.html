@@ -45,7 +45,7 @@
    };
    // 音声入力をグラフ用配列に入れる
    var graphSize = 8000;
-   var graphdata = new Float32Array(graphSize);
+   var graphdata = new Array(graphSize);
    var onAudioProcess = function(e) {
        var input = e.inputBuffer.getChannelData(0);
        graphdata = graphdata.slice(input.length)
