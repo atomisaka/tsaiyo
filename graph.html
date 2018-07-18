@@ -28,7 +28,7 @@
    var audioCtx = new AudioContext();
    var start = function() {
      // 音声のStreamを取得する
-     navigator.mediaDevices.getUserMedia({audio: true}, function(stream) {
+     navigator.mediaDevices.getUserMedia({audio: true}).then(function(stream) {
 try {
        startbutton.disabled = true;
        localStream = stream;
@@ -45,7 +45,7 @@ try {
 } catch (e) {
   alert(e);
 };
-     }, function(e) { alert("開始できません(" + e + ")。"); } );
+     }).catch(function(e) { alert("開始できません(" + e + ")。"); } );
    };
    // 音声入力をグラフ用配列に入れる
    var graphSize = 8000;
