@@ -41,24 +41,20 @@
   };
   var arrayBuffer = new Array();
   var onAudioProcess = function(e) {
-try {
-      var audioData = e.inputBuffer.getChannelData(0);
-      var buf_length = audioData.length;
+      var input = e.inputBuffer.getChannelData(0);
+      graphdata = graphdata.slice(input.length);
+      Array.prototype.push.apply(graphdata,input);
+
+      var buf_length = input.length;
       var buffer_i32 = new Uint32Array(buf_length);
       var view = new DataView(buffer_i32.buffer);
       var volume = 1;
       var index = 0;
       for (var i = 0; i < buf_length; i++){
-      	view.setInt32(index, (audioData[i] * (0x7FFF * volume)), true);
+      	view.setInt32(index, (input[i] * (0x7FFF * volume)), true);
       	index += 4;
       }
       arrayBuffer.push(buffer_i32);
-
-      graphdata = graphdata.slice(audioData.length)
-      Array.prototype.push.apply(graphdata,audioData);
-} catch (e) {
-  alert(e);
-};
   };
   var end = function() {
       endbutton.disabled = true;
@@ -74,8 +70,6 @@ try {
   };
 // 以下Flac
 function downloadAsFlac(arrayBuffer,fileName) {
-try {
-alert(arrayBuffer.length);
   var encData = [];
   var result = encodeFlac(arrayBuffer, encData, true, {
     sample_rate   : audioCtx.sampleRate,
@@ -85,10 +79,7 @@ alert(arrayBuffer.length);
   });
   var metaData = result.metaData;
   var blob = exportFlacFile(encData, metaData);
-  saveAs(blob, "test.flac");
-} catch (e) {
-  alert(e);
-}
+  saveAs(blob, fileName);
 }
 function exportFlacFile(recBuffers, metaData){
   var recLength = getLength(recBuffers);
