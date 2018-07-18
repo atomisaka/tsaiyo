@@ -67,6 +67,7 @@
    };
    // 以下Flac変換用コード
    function downloadAsFlac(floatBuffer,fileName) {
+try {
      var flacParams = {
        sample_rate   : audioCtx.sampleRate,
        channels      : 1,
@@ -91,6 +92,9 @@
      var samples = mergeBuffers(encData, recLength);
      var blob = new Blob([samples],{ type: 'audio/flac' });
      saveAs(blob, fileName);
+} catch (e) {
+  alert(e);
+};
    }
    function encodeFlac(buffer, recBuffers, flacParams){
      var meta_data;
