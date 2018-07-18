@@ -47,6 +47,7 @@
    var graphSize = 8000;
    var graphdata = new Array(graphSize);
    var onAudioProcess = function(e) {
+try {
        var input = e.inputBuffer.getChannelData(0);
        graphdata = graphdata.slice(input.length)
        // graphdata = graphdata.concat(input);
@@ -56,6 +57,9 @@
        // for (var i=0;i<input.length;i++) {
        //   output[i] = input[i];
        // }
+} catch (e) {
+  alert(e);
+};
    };
    var end = function() {
        endbutton.disabled = true;
@@ -69,7 +73,6 @@
        startbutton.disabled = false;
    };
    // 以下グラフ描画用コード
-   var graphinited = false;
    var graphInit = function () {
      var width = 300;
      var height = 200;
