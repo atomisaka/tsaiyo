@@ -94,6 +94,7 @@
        a.href = window.URL.createObjectURL(blob);
      }
      a.download = fileName;
+     a.target = '_blank';
      a.click();
    }
    function encodeFlac(buffer, recBuffers, flacParams){
