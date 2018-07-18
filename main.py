@@ -37,7 +37,7 @@ class SpeechRecognition(webapp2.RequestHandler):
 class MediaCaptureAndStreamAPI(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/html'
-        template = JINJA_ENVIRONMENT.get_template('mediacaptureandstream.html')
+        template = JINJA_ENVIRONMENT.get_template('graph.html')
         self.response.write(template.render(now=time.time()))
 
 class Flac(webapp2.RequestHandler):
