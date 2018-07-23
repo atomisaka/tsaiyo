@@ -10,7 +10,6 @@
   <button onclick="start()" id="start">開始</button>
   <button onclick="end()" id="end" disabled>終了</button>
  </div>
- <div id="download"></div>
  <script type="text/javascript"><!--
    var localStream,source,scriptNode;
    var startbutton = document.getElementById("start");
@@ -95,9 +94,9 @@
      }
      a.download = fileName;
      a.target = '_blank';
-     document.getElementById("download").appendChild(a);
+     document.body.appendChild(a);
      a.click();
-     document.getElementById("download").removeChild(a);
+     document.body.removeChild(a);
    }
    function encodeFlac(buffer, recBuffers, flacParams){
      var meta_data;
