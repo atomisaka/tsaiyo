@@ -31,10 +31,10 @@ navigator.mediaDevices.getUserMedia({audio: true}).then(function(stream) {
     var input = e.inputBuffer.getChannelData(0); // 生の音声データ
     // inputを使っていろいろやる
     // 入力をそのまま出力する
-    // var output = e.outputBuffer.getChannelData(0);
-    // for (var i=0;i<input.length;i++) {
-    //   output[i] = input[i];
-    // }
+    var output = e.outputBuffer.getChannelData(0);
+    for (var i=0;i<input.length;i++) {
+      output[i] = input[i];
+    }
   };
   // それぞれのノードを接続
   source.connect(scriptNode);
