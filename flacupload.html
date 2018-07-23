@@ -87,7 +87,7 @@
      var samples = mergeBuffers(encData, recLength);
      var blob = new Blob([samples],{ type: 'audio/flac' });
      var oReq = new XMLHttpRequest();
-     oReq.open("POST", url, true);
+     oReq.open("POST", "flacupload", true);
      oReq.onload = function (oEvent) {
        alert('アップロード完了');
      };
