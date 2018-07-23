@@ -31,15 +31,14 @@
      navigator.mediaDevices.getUserMedia({audio: true}).then(function(stream) {
        startbutton.disabled = true;
        localStream = stream;
-var track = stream.getTracks()[0];
-       // alert(.label);
+       // alert(stream.getTracks()[0].label);
        // Nodeを二つ用意
        source = audioCtx.createMediaStreamSource(stream);
        scriptNode = audioCtx.createScriptProcessor(4096, 1, 1);
        scriptNode.onaudioprocess = onAudioProcess;
        // それぞれのノードを接続
        source.connect(scriptNode);
-       scriptNode.connect(audioCtx.destination);
+       //scriptNode.connect(audioCtx.destination);
        // 終了ボタンを押せるように
        endbutton.disabled = false;
      }).catch(function(e) { alert("開始できません(" + e + ")。"); } );
