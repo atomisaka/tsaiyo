@@ -12,7 +12,7 @@
  </div>
  <div><div id="graph"></div></div>
  <script type="text/javascript"><!--
-   var localStream,source,scriptNode;
+   var localStream,source,analyser;
    var startbutton = document.getElementById("start");
    var endbutton = document.getElementById("end");
    // getUserMediaとAudioContextを準備する
@@ -31,15 +31,17 @@
      navigator.mediaDevices.getUserMedia({audio: true}).then(function(stream) {
        startbutton.disabled = true;
        localStream = stream;
-var track = stream.getTracks()[0];
        // alert(.label);
        // Nodeを二つ用意
        source = audioCtx.createMediaStreamSource(stream);
-       scriptNode = audioCtx.createScriptProcessor(4096, 1, 1);
-       scriptNode.onaudioprocess = onAudioProcess;
+       analyser = audioCtx.createAnalyser();
+source.connect(analyser);
+analyser.connect(audioCtx.destination);
+//       scriptNode = audioCtx.createScriptProcessor(4096, 1, 1);
+//       scriptNode.onaudioprocess = onAudioProcess;
        // それぞれのノードを接続
-       source.connect(scriptNode);
-       scriptNode.connect(audioCtx.destination);
+//       source.connect(scriptNode);
+//       scriptNode.connect(audioCtx.destination);
        // 終了ボタンを押せるように
        endbutton.disabled = false;
      }).catch(function(e) { alert("開始できません(" + e + ")。"); } );
@@ -96,6 +98,10 @@ var track = stream.getTracks()[0];
           .style("stroke", "steelblue")
           .style("fill", "none");
      setInterval(function () {
+  // var data = new Float32Array(analyser.frequencyBinCount);
+  // var data = new Uint8Array(analyser.frequencyBinCount);
+  analyser.getFloatTimeDomainData(graphdata);
+  return data;
        pathg.selectAll("path")
             .data([graphdata])
             .attr("d", d3line);
