@@ -36,13 +36,10 @@ var track = stream.getTracks()[0];
        // Nodeを二つ用意
        source = audioCtx.createMediaStreamSource(stream);
        analyser = audioCtx.createAnalyser();
-source.connect(analyser);
-// analyser.connect(audioCtx.destination);
-//       scriptNode = audioCtx.createScriptProcessor(4096, 1, 1);
        analyser.onaudioprocess = onAudioProcess;
        // それぞれのノードを接続
-//       source.connect(scriptNode);
-//       scriptNode.connect(audioCtx.destination);
+       source.connect(analyser);
+       analyser.connect(audioCtx.destination);
        // 終了ボタンを押せるように
        endbutton.disabled = false;
      }).catch(function(e) { alert("開始できません(" + e + ")。"); } );
