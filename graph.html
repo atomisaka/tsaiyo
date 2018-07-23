@@ -49,7 +49,7 @@ source.connect(analyser);
    };
    // 音声入力をグラフ用配列に入れる
    var graphSize = 8000;
-   var graphdata = new Array(graphSize).fill(0);
+   var graphdata = new Float32Array(graphSize);
    var onAudioProcess = function(e) {
        var input = e.inputBuffer.getChannelData(0);
        graphdata = graphdata.slice(input.length)
