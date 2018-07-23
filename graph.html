@@ -38,7 +38,7 @@
        scriptNode.onaudioprocess = onAudioProcess;
        // それぞれのノードを接続
        source.connect(scriptNode);
-       scriptNode.connect(audioCtx.destination);
+       // scriptNode.connect(audioCtx.destination);
        // 終了ボタンを押せるように
        endbutton.disabled = false;
      }).catch(function(e) { alert("開始できません(" + e + ")。"); } );
