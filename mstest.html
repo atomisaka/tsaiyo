@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"/>
+ <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+ <h1>Media Capture and Stream API</h1>
+ <div>
+  <button onclick="start()" id="start">開始</button>
+  <button onclick="end()" id="end" disabled>終了</button>
+ </div>
+ <div><div id="graph"></div></div>
+ <script type="text/javascript"><!--
+navigator.mediaDevices = navigator.mediaDevices || ((navigator.mozGetUserMedia || navigator.webkitGetUserMedia) ? {
+   getUserMedia: function(c) {
+     return new Promise(function(y, n) {
+       (navigator.mozGetUserMedia ||
+        navigator.webkitGetUserMedia).call(navigator, c, y, n);
+     });
+   }
+} : null);
+
+navigator.mediaDevices.getUserMedia({audio : true}) // 今回は音声だけ欲しい。
+.then(function(stream) {
+ // streamを使っていろいろする。
+})
+.catch(function(err) {
+  console.log(err.name + ": " + err.message);
+});
+ --></script>
+</body>
+</html>
