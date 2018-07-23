@@ -102,7 +102,6 @@ source.connect(analyser);
   // var data = new Float32Array(analyser.frequencyBinCount);
   // var data = new Uint8Array(analyser.frequencyBinCount);
   if (analyser) analyser.getFloatTimeDomainData(graphdata);
-  return data;
        pathg.selectAll("path")
             .data([graphdata])
             .attr("d", d3line);
