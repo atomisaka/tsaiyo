@@ -31,7 +31,8 @@
      navigator.mediaDevices.getUserMedia({audio: true}).then(function(stream) {
        startbutton.disabled = true;
        localStream = stream;
-       // alert(stream.getTracks()[0].label);
+var track = stream.getTracks()[0];
+       // alert(.label);
        // Nodeを二つ用意
        source = audioCtx.createMediaStreamSource(stream);
        scriptNode = audioCtx.createScriptProcessor(4096, 1, 1);
