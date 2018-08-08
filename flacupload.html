@@ -90,6 +90,7 @@
      oReq.open("POST", "flacupload", true);
      oReq.onload = function (oEvent) {
        alert('アップロード完了');
+       alert(this.responseText);
      };
      oReq.send(blob);
    }
@@ -170,3 +171,4 @@
 --></script>
 </body>
 </html>
+
