@@ -89,8 +89,7 @@
      var oReq = new XMLHttpRequest();
      oReq.open("POST", "flacupload", true);
      oReq.onload = function (oEvent) {
-       alert('アップロード完了');
-       alert(this.responseText);
+       alert('アップロード完了\n' + this.responseText);
      };
      oReq.send(blob);
    }

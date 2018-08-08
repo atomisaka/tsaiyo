@@ -1,7 +1,3 @@
-// Copyright 2018 Google Inc. All rights reserved.
-// Use of this source code is governed by the Apache 2.0
-// license that can be found in the LICENSE file.
-
 package main
 
 import (
@@ -56,9 +52,6 @@ func handle(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		defer resp.Body.Close()
-		fmt.Fprintf(w, "HTTP GET returned status %v", resp.Status)
-		fmt.Fprintln(w, "response Status:", resp.Status)
-		fmt.Fprintln(w, "response Headers:", resp.Header)
 		body, _ := ioutil.ReadAll(resp.Body)
 		fmt.Fprintln(w, "response Body:", string(body))
 	}
