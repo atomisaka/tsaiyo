@@ -20,7 +20,7 @@ func main() {
 func handle(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		w.WriteHeader(http.StatusOK)
-		var t = template.Must(template.ParseFiles("flacupload.html"))
+		var t = template.Must(template.ParseFiles("synthesis.html"))
 		if err := t.Execute(w, nil); err != nil {
 			fmt.Println(err.Error())
 			return
