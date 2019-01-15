@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -31,21 +31,20 @@ func handle(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err.Error())
 			return
 		}
-		bufbody := new(bytes.Buffer)
-		bufbody.ReadFrom(r.Body)
-		var json = `{
-		  "config" : {
-		    "languageCode" : "ja-JP",
-		    "maxAlternatives" : 10
-		  },
-		  "audio" : {
-		    "content" : "` + base64.StdEncoding.EncodeToString(bufbody.Bytes()) + `"
-		  }
-		}`
-		jsonStr := []byte(json)
+		jsonStr, _ := json.Marshal(map[string]interface{}{
+			"input": map[string]string{
+				"text": r.FormValue("text"),
+			},
+			"voice": map[string]string{
+				"languageCode": "ja-JP",
+			},
+			"audioConfig": map[string]string{
+				"audioEncoding": "MP3",
+			},
+		})
 		ctx := appengine.NewContext(r)
 		client := urlfetch.Client(ctx)
-		url := "https://speech.googleapis.com/v1/speech:recognize?key=" + string(apikey)
+		url := "https://texttospeech.googleapis.com/v1/text:synthesize?key=" + string(apikey)
 		resp, err := client.Post(url, "application/json", bytes.NewBuffer(jsonStr))
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -53,6 +52,7 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		}
 		defer resp.Body.Close()
 		body, _ := ioutil.ReadAll(resp.Body)
-		fmt.Fprintln(w, "response Body:", string(body))
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprintln(w, string(body))
 	}
 }

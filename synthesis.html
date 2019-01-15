@@ -2,27 +2,22 @@
 <html>
     <head></head>
     <body>
-        <h1>Web Speech API</h1>
-<input type="button" value="こんにちは" onclick="Hello()">
-<textarea id="ssml">
-<?xml version="1.0"?>
-<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="ja-JP">
-  こんにちは。朝日ネットでWebアプリケーションの開発を行っている tommy です。
-</speak>
-</textarea>
-<script type="text/javascript">
-function Hello() {
-    var utterThis = new SpeechSynthesisUtterance();
-    utterThis.text = document.getElementById("ssml").value;
-    var voices = window.speechSynthesis.getVoices();
-    for(i = 0; i < voices.length ; i++) {
-        if(voices[i].lang === 'ja-JP') {
-            utterThis.voice = voices[i];
-            break;
-        }
-    }
-    window.speechSynthesis.speak(utterThis);
-}
-</script>
+        <h1>Cloud Text-to-Speech API</h1>
+        <form method="POST" onsubmit="return Submit(this);">
+            <input type="text" name="text">
+            <input type="submit">
+        </form>
+        <script type="text/javascript"><!--
+            function Submit(form) {
+                event.preventDefault();
+                var oReq = new XMLHttpRequest();
+                oReq.open("POST", "synthesise", true);
+                oReq.onload = function (oEvent) {
+                   new Audio("data:audio/mp3;base64," + JSON.parse(this.responseText).audioContent).play();
+                };
+                oReq.send(new FormData(form));
+                return false;
+            }
+        --></script>
     </body>
 </html>
